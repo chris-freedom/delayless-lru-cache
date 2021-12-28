@@ -1,0 +1,26 @@
+{
+  "name": "lru-cache",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "swc src -d dist -w",
+    "prettier": "prettier --write .",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "yallist": "^4.0.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^27.4.4",
+    "@swc/cli": "^0.1.55",
+    "@swc/core": "^1.2.123",
+    "@swc/jest": "^0.2.15",
+    "chokidar": "^3.5.2",
+    "jest": "^27.4.5",
+    "prettier": "2.5.1"
+  }
+}
