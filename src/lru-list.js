@@ -6,8 +6,8 @@ export class LruList {
       throw new TypeError('duration must be a non-negative number')
     }
 
-    if (typeof maxEntriesAmount !== 'number' || maxEntriesAmount < 0) {
-      throw new TypeError('maxEntriesAmount must be a non-negative number')
+    if (typeof maxEntriesAmount !== 'number' || maxEntriesAmount < 1) {
+      throw new TypeError('maxEntriesAmount must be bigger than 1')
     }
 
     this.duration = duration
@@ -34,6 +34,12 @@ export class LruList {
     this.list.unshiftNode(node)
 
     return node
+  }
+
+  moveNodeToHead(node) {
+    this.list.unshiftNode(node)
+
+    return this.list.head
   }
 
   isObsoleteNode(node) {

@@ -1,4 +1,4 @@
-import { LruCache } from '../src/lru-cache.js'
+import { DelaylessLruCache } from '../src/delayless-lru-cache.js'
 import { setTimeout } from 'timers/promises'
 
 let counter = 1
@@ -6,7 +6,7 @@ const task = async () => {
   await setTimeout(5000)
   return counter
 }
-const cache = new LruCache(5, 3)
+const cache = new DelaylessLruCache(5, 3)
 cache.setTaskOnce('test', task)
 const value = await cache.get('test')
 

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "src/delayless-lru-cache.js",
   "scripts": {
     "dev": "swc src -d dist -w",
     "prettier": "prettier --write .",
