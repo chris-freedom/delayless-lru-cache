@@ -1,11 +1,11 @@
 import { LruList } from './lru-list.js'
 
 export class DelaylessLruCache {
-  constructor(duration, maxEntriesAmount) {
+  constructor({ duration, maxEntriesAmount }) {
     this.cache = new Map()
     this.tasks = new Map()
     this.pendingTasks = new Set()
-    this.lruList = new LruList(duration, maxEntriesAmount)
+    this.lruList = new LruList({ duration, maxEntriesAmount })
   }
 
   setTask(key, task, errorHandler) {

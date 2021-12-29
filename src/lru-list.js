@@ -1,7 +1,7 @@
 import Yallist from 'yallist'
 
 export class LruList {
-  constructor(duration = Infinity, maxEntriesAmount = Infinity) {
+  constructor({ duration = Infinity, maxEntriesAmount = Infinity }) {
     if (typeof duration !== 'number' || duration < 0) {
       throw new TypeError('duration must be a non-negative number')
     }

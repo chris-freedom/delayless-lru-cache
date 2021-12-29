@@ -6,7 +6,7 @@ const task = async () => {
   await setTimeout(5000)
   return counter
 }
-const cache = new DelaylessLruCache(5, 3)
+const cache = new DelaylessLruCache({ duration: 5, maxEntriesAmount: 3 })
 cache.setTaskOnce('test', task)
 const value = await cache.get('test')
 
