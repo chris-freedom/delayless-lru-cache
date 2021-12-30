@@ -48,12 +48,9 @@ export class DelaylessLruCache {
         this.cache.set(key, node)
       }
 
-      this.runningTasks.delete(key)
-
       return payload
-    } catch (err) {
+    } finally {
       this.runningTasks.delete(key)
-      throw err
     }
   }
 
