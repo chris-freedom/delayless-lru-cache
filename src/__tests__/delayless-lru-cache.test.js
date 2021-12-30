@@ -28,7 +28,9 @@ describe('Delayless lru cache tests', () => {
     expect(delaylessLruCache.runningTasks.size).toEqual(1)
 
     const result = await Promise.all([firstPromise, secondPromise])
-    expect(result).toEqual(expect.arrayContaining(['dummy response', 'dummy response']))
+    expect(result).toEqual(
+      expect.arrayContaining(['dummy response', 'dummy response'])
+    )
     expect(delaylessLruCache.runningTasks.size).toEqual(0)
     expect(delaylessLruCache.cache.has('test key')).toBeTruthy()
 
