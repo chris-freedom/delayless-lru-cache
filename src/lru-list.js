@@ -1,7 +1,7 @@
 import Yallist from 'yallist'
 
 export class LruList {
-  constructor({ duration = Infinity, maxEntriesAmount = Infinity }) {
+  constructor ({ duration = Infinity, maxEntriesAmount = Infinity }) {
     if (typeof duration !== 'number' || duration < 0) {
       throw new TypeError('duration must be a non-negative number')
     }
@@ -15,8 +15,8 @@ export class LruList {
     this.list = new Yallist()
   }
 
-  createNode(key, payload) {
-    if (!this.#isEnoughSpace) this.#removeLastNode()
+  createNode (key, payload) {
+    if (!this.isEnoughSpace) this.list.removeNode(this.list.tail)
 
     this.list.unshift({
       key,
@@ -27,7 +27,7 @@ export class LruList {
     return this.list.head
   }
 
-  updateNode(node, payload) {
+  updateNode (node, payload) {
     const { value } = node
     value.payload = payload
     value.updatedAt = Date.now()
@@ -36,23 +36,19 @@ export class LruList {
     return node
   }
 
-  moveNodeToHead(node) {
+  moveNodeToHead (node) {
     this.list.unshiftNode(node)
 
     return this.list.head
   }
 
-  isObsoleteNode(node) {
+  isObsoleteNode (node) {
     const { value } = node
     const secondsPassed = Math.round((Date.now() - value.updatedAt) / 1000)
     return this.duration <= secondsPassed
   }
 
-  #removeLastNode() {
-    this.list.removeNode(this.list.tail)
-  }
-
-  get #isEnoughSpace() {
+  get isEnoughSpace () {
     return this.maxEntriesAmount > this.list.length
   }
 }

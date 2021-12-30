@@ -17,7 +17,5 @@ await setTimeout(6000)
 const value2 = await cache.get('test')
 console.log('value2: ', value2)
 
-await setTimeout(2000)
-
 const value3 = await cache.get('test')
 console.log('value3: ', value3)
