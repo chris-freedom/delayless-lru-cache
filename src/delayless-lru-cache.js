@@ -4,7 +4,7 @@ export class DelaylessLruCache {
   constructor({ duration, maxEntriesAmount }) {
     this.cache = new Map()
     this.tasks = new Map()
-    this.pendingTasks = new Set()
+    this.runningTasks = new Map()
     this.lruList = new LruList({ duration, maxEntriesAmount })
   }
 
@@ -28,42 +28,54 @@ export class DelaylessLruCache {
     return this.#getStaleWhileRevalidate(key, storedNode)
   }
 
+  async #initialRetrieving(key) {
+    if (this.runningTasks.has(key)) return this.runningTasks.get(key)
+
+    const { task } = this.tasks.get(key)
+    const runningTask = task()
+    this.runningTasks.set(key, runningTask)
+    const payload = await runningTask
+    const node = this.lruList.createNode(key, payload)
+    this.cache.set(key, node)
+    this.runningTasks.delete(key)
+
+    return payload
+  }
+
   #getStaleWhileRevalidate(key, storedNode) {
     const node = this.lruList.moveNodeToHead(storedNode)
     const { value } = node
     this.cache.set(key, node)
 
-    if (this.lruList.isObsoleteNode(node) && !this.#isRevalidationPending(key)) {
+    if (
+      this.lruList.isObsoleteNode(node) &&
+      !this.#isRevalidationRunning(key)
+    ) {
       this.#revalidate(key)
     }
 
     return value.payload
   }
 
-  async #initialRetrieving(key) {
-    const { task } = this.tasks.get(key)
-    const payload = await task()
-    const node = this.lruList.createNode(key, payload)
-    this.cache.set(key, node)
-
-    return payload
-  }
-
-  #isRevalidationPending(key) {
-    return this.pendingTasks.has(key)
+  #isRevalidationRunning(key) {
+    return this.runningTasks.has(key)
   }
 
   #revalidate(key) {
-    this.pendingTasks.add(key)
     const { task, errorHandler } = this.tasks.get(key)
-    task().then((payload) => {
-      const storedNode = this.cache.get(key)
-      const node = this.lruList.updateNode(storedNode, payload)
-      this.cache.set(key, node)
-    }).catch((err) => {
-      if (typeof errorHandler === 'function') errorHandler(err, key)
-    }).finally(() => {
-      this.pendingTasks.delete(key)
-    })
+    const runningTask = task()
+    this.runningTasks.set(key, runningTask)
+    runningTask
+      .then((payload) => {
+        const storedNode = this.cache.get(key)
+        const node = this.lruList.updateNode(storedNode, payload)
+        this.cache.set(key, node)
+      })
+      .catch((err) => {
+        if (typeof errorHandler === 'function') errorHandler(err, key)
+      })
+      .finally(() => {
+        this.runningTasks.delete(key)
+      })
   }
 }

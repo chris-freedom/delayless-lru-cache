@@ -6,7 +6,10 @@ describe('Delayless lru cache tests', () => {
   let delaylessLruCache
 
   beforeEach(() => {
-    delaylessLruCache = new DelaylessLruCache({ duration: 2, maxEntriesAmount: 3 })
+    delaylessLruCache = new DelaylessLruCache({
+      duration: 2,
+      maxEntriesAmount: 3,
+    })
   })
 
   test('Task should be set', () => {
