@@ -12,17 +12,19 @@ export class LruList {
 
     this.duration = duration
     this.maxEntriesAmount = maxEntriesAmount
-    this.existingNodes = new Set()
+    this.nodesMapper = new Map()
     this.list = new Yallist()
   }
 
   createNode(key, onDeleteCallback) {
-    this.existingNodes.add(key)
     if (!this.isEnoughSpace) {
       const nodeKeyToDelete = this.list.tail.value.key
-      if (typeof onDeleteCallback === 'function')
+
+      if (typeof onDeleteCallback === 'function') {
         onDeleteCallback(nodeKeyToDelete)
-      this.existingNodes.delete(nodeKeyToDelete)
+      }
+
+      this.nodesMapper.delete(nodeKeyToDelete)
       this.list.removeNode(this.list.tail)
     }
 
@@ -31,8 +33,10 @@ export class LruList {
       payload: null,
       updatedAt: Date.now(),
     })
+    const node = this.list.head
+    this.nodesMapper.set(key, node)
 
-    return this.list.head
+    return node
   }
 
   updatePayload(node, payload) {
@@ -48,7 +52,13 @@ export class LruList {
     return node
   }
 
-  moveNodeToHead(node) {
+  moveNodeToHead(keyOrNode) {
+    let node = keyOrNode
+
+    if (typeof keyOrNode === 'string' || typeof keyOrNode === 'number') {
+      node = this.nodesMapper.get(keyOrNode)
+    }
+
     this.list.unshiftNode(node)
 
     return this.list.head
@@ -61,7 +71,7 @@ export class LruList {
   }
 
   isNodeExists(node) {
-    return this.existingNodes.has(node.value.key)
+    return this.nodesMapper.has(node.value.key)
   }
 
   get isEnoughSpace() {

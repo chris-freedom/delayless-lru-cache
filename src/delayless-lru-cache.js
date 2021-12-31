@@ -33,7 +33,10 @@ export class DelaylessLruCache {
   }
 
   async #initialRetrieving(key) {
-    if (this.#isTaskRunning(key)) return this.runningTasks.get(key)
+    if (this.#isTaskRunning(key)) {
+      this.lruList.moveNodeToHead(key)
+      return this.runningTasks.get(key)
+    }
 
     const { task } = this.tasks.get(key)
 
