@@ -9,16 +9,37 @@ export class DelaylessLruCache {
   }
 
   setTask(key, task, errorHandler) {
-    if (typeof task !== 'function') throw new Error('Task must be a function')
+    if (!DelaylessLruCache.#isValidKey(key)) {
+      throw new Error(
+        `Key must be a string or a number. ${typeof key} was given`
+      )
+    }
+
+    if (typeof task !== 'function') {
+      throw new Error('Task must be a function')
+    }
+
     this.tasks.set(key, { task, errorHandler })
   }
 
   setTaskOnce(key, task) {
+    if (!DelaylessLruCache.#isValidKey(key)) {
+      throw new Error(
+        `Key must be a string or a number. ${typeof key} was given`
+      )
+    }
+
     if (this.tasks.has(key)) return
     this.setTask(key, task)
   }
 
   async get(key) {
+    if (!DelaylessLruCache.#isValidKey(key)) {
+      throw new Error(
+        `Key must be a string or a number. ${typeof key} was given`
+      )
+    }
+
     if (!this.tasks.has(key)) {
       throw new Error(`Task must be defined for the "${key}" key`)
     }
@@ -65,6 +86,10 @@ export class DelaylessLruCache {
     }
 
     return node.value.payload
+  }
+
+  static #isValidKey(key) {
+    return typeof key === 'string' || typeof key === 'number'
   }
 
   #isTaskRunning(key) {
