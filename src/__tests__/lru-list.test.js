@@ -4,9 +4,11 @@ import { setTimeout } from 'timers/promises'
 
 describe('LRU list tests', () => {
   let lruList
-
   beforeEach(() => {
     lruList = new LruList({ duration: 2, maxEntriesAmount: 3 })
+    jest.spyOn(lruList.list, 'unshift')
+    jest.spyOn(lruList.list, 'removeNode')
+
   })
 
   test('Add one node. Node is equal to the head', () => {
@@ -15,6 +17,7 @@ describe('LRU list tests', () => {
     expect(node.value.key).toEqual('test key')
     expect(lruList.list.head.value.payload).toEqual(null)
     expect(node.value.payload).toEqual(null)
+    expect(lruList.list.unshift).toHaveBeenCalledTimes(1)
   })
 
   test('Add two nodes. Equal to the head and tail correspondingly', () => {
@@ -29,6 +32,8 @@ describe('LRU list tests', () => {
     expect(lruList.list.head.value.payload).toEqual(null)
     expect(secondNode.value.key).toEqual('second key')
     expect(secondNode.value.payload).toEqual(null)
+
+    expect(lruList.list.unshift).toHaveBeenCalledTimes(2)
   })
 
   test('The last node should be removed if not enough space left', () => {
@@ -39,6 +44,9 @@ describe('LRU list tests', () => {
 
     expect(lruList.list.tail.value.key).toEqual('second key')
     expect(lruList.list.tail.value.payload).toEqual(null)
+    expect(lruList.list.unshift).toHaveBeenCalledTimes(4)
+    expect(lruList.list.removeNode).toHaveBeenCalledTimes(1)
+    expect(lruList.list.removeNode.mock.calls[0][0].value.key).toEqual('first key')
   })
 
   test('Node should be moved to the head', () => {
