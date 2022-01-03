@@ -1,0 +1,1 @@
+[![codecov](https://codecov.io/gh/chris-freedom/delayless-lru-cache/branch/master/graph/badge.svg?token=XKQ9GGI7EI)](https://codecov.io/gh/chris-freedom/delayless-lru-cache)
