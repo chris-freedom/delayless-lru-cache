@@ -1,6 +1,6 @@
 import { beforeEach, expect } from '@jest/globals'
-import { DelaylessLruCache } from '../delayless-lru-cache'
 import { setTimeout } from 'timers/promises'
+import { DelaylessLruCache } from '../delayless-lru-cache.js'
 
 describe('Delayless lru cache tests', () => {
   let delaylessLruCache

@@ -8,7 +8,6 @@ describe('LRU list tests', () => {
     lruList = new LruList({ duration: 2, maxEntriesAmount: 3 })
     jest.spyOn(lruList.list, 'unshift')
     jest.spyOn(lruList.list, 'removeNode')
-
   })
 
   test('Add one node. Node is equal to the head', () => {
@@ -46,7 +45,9 @@ describe('LRU list tests', () => {
     expect(lruList.list.tail.value.payload).toEqual(null)
     expect(lruList.list.unshift).toHaveBeenCalledTimes(4)
     expect(lruList.list.removeNode).toHaveBeenCalledTimes(1)
-    expect(lruList.list.removeNode.mock.calls[0][0].value.key).toEqual('first key')
+    expect(lruList.list.removeNode.mock.calls[0][0].value.key).toEqual(
+      'first key'
+    )
   })
 
   test('Node should be moved to the head', () => {
