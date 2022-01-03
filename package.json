@@ -13,7 +13,8 @@
   "scripts": {
     "prettier": "prettier --write src",
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest src",
-    "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --collectCoverage src"
+    "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --collectCoverage src",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^27.4.4",
+    "husky": "^7.0.4",
     "jest": "^27.4.5",
     "prettier": "2.5.1"
   },
