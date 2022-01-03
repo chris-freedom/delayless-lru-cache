@@ -22,7 +22,7 @@ export class DelaylessLruCache {
     this.tasks.set(key, { task, errorHandler })
   }
 
-  setTaskOnce(key, task) {
+  setTaskOnce(key, task, errorHandler) {
     if (!DelaylessLruCache.#isValidKey(key)) {
       throw new Error(
         `Key must be a string or a number. ${typeof key} was given`
@@ -30,7 +30,7 @@ export class DelaylessLruCache {
     }
 
     if (this.tasks.has(key)) return
-    this.setTask(key, task)
+    this.setTask(key, task, errorHandler)
   }
 
   async get(key) {
