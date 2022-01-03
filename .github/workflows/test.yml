@@ -1,6 +1,6 @@
-name: Main
+name: Test
 
-on: push
+on: [push, pull_request]
 
 jobs:
   test:
@@ -11,5 +11,5 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - run: npm install
+      - run: npm ci
       - run: npm test
