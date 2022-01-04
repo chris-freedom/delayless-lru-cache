@@ -3,7 +3,11 @@
   "version": "1.0.2",
   "description": "",
   "type": "module",
-  "main": "src/delayless-lru-cache.js",
+  "main": "./dist/delayless-lru-cache.cjs",
+  "exports": {
+    "import": "./src/delayless-lru-cache.js",
+    "require": "./dist/delayless-lru-cache.cjs"
+  },
   "files": [
     "package.json",
     "README.md",
@@ -11,10 +15,11 @@
     "src/lru-list.js"
   ],
   "scripts": {
-    "prettier": "prettier --write src",
-    "test": "NODE_OPTIONS='--experimental-vm-modules' jest src",
-    "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --collectCoverage src",
-    "prepare": "husky install"
+    "prettier": "prettier --write src tests jest.config.js",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest tests",
+    "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --collectCoverage tests",
+    "prepare": "husky install",
+    "build": "babel src --out-dir dist --plugins=@babel/plugin-transform-modules-commonjs"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +27,9 @@
     "yallist": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.7",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
     "@jest/globals": "^27.4.4",
     "husky": "^7.0.4",
     "jest": "^27.4.5",

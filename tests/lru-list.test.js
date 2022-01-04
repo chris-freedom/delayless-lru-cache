@@ -1,4 +1,4 @@
-import { LruList } from '../lru-list.js'
+import { LruList } from '../src/lru-list.js'
 import { beforeEach, expect, jest } from '@jest/globals'
 import { setTimeout } from 'timers/promises'
 
