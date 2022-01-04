@@ -14,7 +14,10 @@ export class LruList {
       throw new TypeError('duration must be a non-negative number')
     }
 
-    if (typeof this.#maxEntriesAmount !== 'number' || this.#maxEntriesAmount < 1) {
+    if (
+      typeof this.#maxEntriesAmount !== 'number' ||
+      this.#maxEntriesAmount < 1
+    ) {
       throw new TypeError('maxEntriesAmount must be bigger than 1')
     }
   }

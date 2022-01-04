@@ -5,7 +5,7 @@ export class DelaylessLruCache {
   #cache = new Map()
   #tasks = new Map()
   #runningTasks = new Map()
-  
+
   constructor({ duration, maxEntriesAmount }) {
     this.#lruList = new LruList({ duration, maxEntriesAmount })
   }
