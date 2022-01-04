@@ -14,14 +14,15 @@
     "src/delayless-lru-cache.js",
     "src/lru-list.js",
     "dist/delayless-lru-cache.js",
-    "dist/lru-list.js"
+    "dist/lru-list.js",
+    "dist/package.json"
   ],
   "scripts": {
     "prettier": "prettier --write src tests jest.config.js",
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest tests",
     "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --collectCoverage tests",
     "prepare": "husky install",
-    "build": "babel src --out-dir dist --plugins=@babel/plugin-transform-modules-commonjs"
+    "build": "rm -rf dist && babel src --out-dir dist --plugins=@babel/plugin-transform-modules-commonjs && echo '{ \"type\": \"commonjs\" }' > dist/package.json"
   },
   "author": "",
   "license": "ISC",
