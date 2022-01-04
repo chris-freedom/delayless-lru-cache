@@ -3,16 +3,18 @@
   "version": "1.0.2",
   "description": "",
   "type": "module",
-  "main": "./dist/delayless-lru-cache.cjs",
+  "main": "./dist/delayless-lru-cache.js",
   "exports": {
     "import": "./src/delayless-lru-cache.js",
-    "require": "./dist/delayless-lru-cache.cjs"
+    "require": "./dist/delayless-lru-cache.js"
   },
   "files": [
     "package.json",
     "README.md",
     "src/delayless-lru-cache.js",
-    "src/lru-list.js"
+    "src/lru-list.js",
+    "./dist/delayless-lru-cache.js",
+    "./dist/lru-list.js"
   ],
   "scripts": {
     "prettier": "prettier --write src tests jest.config.js",
