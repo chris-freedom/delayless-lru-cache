@@ -13,8 +13,8 @@
     "README.md",
     "src/delayless-lru-cache.js",
     "src/lru-list.js",
-    "./dist/delayless-lru-cache.js",
-    "./dist/lru-list.js"
+    "dist/delayless-lru-cache.js",
+    "dist/lru-list.js"
   ],
   "scripts": {
     "prettier": "prettier --write src tests jest.config.js",
