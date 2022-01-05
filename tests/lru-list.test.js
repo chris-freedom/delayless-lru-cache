@@ -94,7 +94,7 @@ describe('Manipulation LRU tests', () => {
       'first key',
       'dummy payload for the first entity'
     )
-    await setTimeout(1500)
+    await setTimeout(2000)
     expect(lruList.isObsoleteNode(firstNode)).toBeTruthy()
   })
 
