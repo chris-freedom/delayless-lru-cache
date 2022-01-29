@@ -73,6 +73,11 @@ export class DelaylessLruCache {
 
     try {
       const runningTask = task()
+
+      if (!(runningTask instanceof Promise)) {
+        throw new Error(`Task of the "${key}" key must return a promise`)
+      }
+
       this.#runningTasks.set(key, runningTask)
       const node = this.#lruList.createNode(key, (k) => this.#cache.delete(k))
       const payload = await runningTask
@@ -105,6 +110,11 @@ export class DelaylessLruCache {
   #revalidate(key) {
     const { task } = this.#tasks.get(key)
     const runningTask = task()
+
+    if (!(runningTask instanceof Promise)) {
+      throw new Error(`Task of the "${key}" key must return a promise`)
+    }
+
     this.#runningTasks.set(key, runningTask)
     runningTask
       .then((payload) => {
