@@ -55,10 +55,6 @@ export class DelaylessLruCache {
     return this.#getStaleWhileRevalidate(key, storedNode)
   }
 
-  get tasks() {
-    return this.#tasks
-  }
-
   isTaskRunning(key) {
     return this.#runningTasks.has(key)
   }

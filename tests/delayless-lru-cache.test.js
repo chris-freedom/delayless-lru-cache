@@ -12,12 +12,13 @@ describe('Delayless lru cache tests', () => {
     })
   })
 
-  test('Task should be set', () => {
-    const dummyTask = async () => 'dummy response'
+  test('Task should be called', async () => {
+    const dummyTask = jest.fn(async () => 'dummy response')
     delaylessLruCache.setTaskOnce('test key', dummyTask)
-    const { task, errorHandler } = delaylessLruCache.tasks.get('test key')
-    expect(task).toEqual(dummyTask)
-    expect(errorHandler).toBeUndefined()
+    delaylessLruCache.get('test key')
+    const returnedValue = await dummyTask.mock.results[0].value
+    expect(returnedValue).toEqual('dummy response')
+    expect(dummyTask).toHaveBeenCalledTimes(1)
   })
 
   test('Initial payload retrieving', async () => {

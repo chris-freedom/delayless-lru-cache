@@ -1,5 +1,6 @@
-const { DelaylessLruCache } = require ('../dist/index')
-console.log(DelaylessLruCache)
+const { DelaylessLruCache } = require ('../dist/delayless-lru-cache.js')
+console.log(new DelaylessLruCache())
+
 // let counter = 1
 // const task = async () => {
 //   // await setTimeout(1000)
