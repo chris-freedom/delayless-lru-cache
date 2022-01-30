@@ -3,7 +3,6 @@
   "version": "1.0.9",
   "description": "",
   "type": "module",
-  "types": "./types/delayless-lru-cache.d.ts",
   "main": "./dist/delayless-lru-cache.js",
   "exports": {
     "import": "./src/delayless-lru-cache.js",
@@ -16,7 +15,8 @@
     "src/lru-list.js",
     "dist/delayless-lru-cache.js",
     "dist/lru-list.js",
-    "dist/package.json"
+    "dist/package.json",
+    "index.d.ts"
   ],
   "scripts": {
     "prettier": "prettier --write src tests jest.config.js",
