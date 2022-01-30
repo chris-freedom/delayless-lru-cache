@@ -1,6 +1,6 @@
 {
   "name": "delayless-lru-cache",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "type": "module",
   "types": "./types/delayless-lru-cache.d.ts",
