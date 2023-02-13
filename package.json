@@ -24,7 +24,7 @@
     "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --collectCoverage tests",
     "prepare": "husky install",
     "build": "rm -rf dist && tsc --p tsconfig.json && node cli/minify.js ./dist && echo '{ \"type\": \"commonjs\" }' > dist/package.json",
-    "publish": "npm version patch && git add . && git commit -m 'Updated package version' && git push && npm run build && npm publish"
+    "deploy": "npm version patch && git add . && git commit -m 'Updated package version' && git push && npm run build && npm publish"
   },
   "author": "Alexandr Kolomiiets",
   "license": "ISC",
