@@ -10,6 +10,18 @@ export class DelaylessLruCache {
     this.#lruList = new LruList({ duration, maxEntriesAmount })
   }
 
+  get tasks () {
+    return this.#tasks
+  }
+
+  get list () {
+    return this.#lruList.list
+  }
+
+  get runningTasks () {
+    return this.#runningTasks
+  }
+
   setTask(key, task, errorHandler) {
     if (!DelaylessLruCache.#isValidKey(key)) {
       throw new Error(
@@ -75,7 +87,10 @@ export class DelaylessLruCache {
       }
 
       this.#runningTasks.set(key, runningTask)
-      const node = this.#lruList.createNode(key, (k) => this.#cache.delete(k))
+      const node = this.#lruList.createNode(key, (k) => {
+        this.#tasks.delete(k)
+        this.#cache.delete(k)
+      })
       const payload = await runningTask
 
       if (this.#lruList.isNodeExists(node)) {
