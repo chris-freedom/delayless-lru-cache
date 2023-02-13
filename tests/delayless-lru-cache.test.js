@@ -83,21 +83,26 @@ describe('Delayless lru cache tests', () => {
     const arraySize = 700
     const promises = [...Array(arraySize).keys()].map((k) => {
       let dummyTask
-      dummyTask = k === arraySize - 100 ?
-        jest.fn(async () => `dummy response ${k}`) :
-        jest.fn(async () => {throw new Error('Something went wrong')})
+      dummyTask =
+        k === arraySize - 100
+          ? jest.fn(async () => `dummy response ${k}`)
+          : jest.fn(async () => {
+              throw new Error('Something went wrong')
+            })
       delaylessLruCache.setTaskOnce(`test key ${k}`, dummyTask)
       return delaylessLruCache.get(`test key ${k}`)
     })
 
-    Promise.all(promises).then(() => {
-      expect(delaylessLruCache.tasks.size).toEqual(3)
-      expect(delaylessLruCache.list.length).toEqual(3)
-      expect(delaylessLruCache.runningTasks.size).toEqual(0)
-    }).catch(() => {
-      expect(delaylessLruCache.tasks.size).toEqual(3)
-      expect(delaylessLruCache.list.length).toEqual(3)
-      expect(delaylessLruCache.runningTasks.size).toEqual(0)
-    })
+    Promise.all(promises)
+      .then(() => {
+        expect(delaylessLruCache.tasks.size).toEqual(3)
+        expect(delaylessLruCache.list.length).toEqual(3)
+        expect(delaylessLruCache.runningTasks.size).toEqual(0)
+      })
+      .catch(() => {
+        expect(delaylessLruCache.tasks.size).toEqual(3)
+        expect(delaylessLruCache.list.length).toEqual(3)
+        expect(delaylessLruCache.runningTasks.size).toEqual(0)
+      })
   })
 })

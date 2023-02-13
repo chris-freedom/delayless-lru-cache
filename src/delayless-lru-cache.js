@@ -10,15 +10,15 @@ export class DelaylessLruCache {
     this.#lruList = new LruList({ duration, maxEntriesAmount })
   }
 
-  get tasks () {
+  get tasks() {
     return this.#tasks
   }
 
-  get list () {
+  get list() {
     return this.#lruList.list
   }
 
-  get runningTasks () {
+  get runningTasks() {
     return this.#runningTasks
   }
 
